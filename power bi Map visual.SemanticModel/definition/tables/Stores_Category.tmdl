@@ -1,0 +1,32 @@
+table Stores_Category
+	lineageTag: 096d8ba9-5c50-4995-9a89-da089ef9e56e
+
+	column 'Category ID'
+		dataType: string
+		lineageTag: b81899b5-2d67-4c6b-899d-5d8583924533
+		summarizeBy: none
+		sourceColumn: Category ID
+
+		annotation SummarizationSetBy = Automatic
+
+	column Category
+		dataType: string
+		lineageTag: ec9bbd58-e0ad-472e-9cec-bb1ba745ee94
+		summarizeBy: none
+		sourceColumn: Category
+
+		annotation SummarizationSetBy = Automatic
+
+	partition Stores_Category = m
+		mode: import
+		source =
+				let
+				    Source = Table.FromRows(Json.Document(Binary.Decompress(Binary.FromText("i45WMlTSUQrOTczJUYrViVYyAvJ8U1MyS3PBXGMg1yexKD1VKTYWAA==", BinaryEncoding.Base64), Compression.Deflate)), let _t = ((type nullable text) meta [Serialized.Text = true]) in type table [#"Category ID" = _t, #"Store Size" = _t]),
+				    #"Renamed Columns" = Table.RenameColumns(Source,{{"Store Size", "Category"}})
+				in
+				    #"Renamed Columns"
+
+	annotation PBI_ResultType = Table
+
+	annotation PBI_NavigationStepName = Navigation
+

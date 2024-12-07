@@ -1,0 +1,100 @@
+{
+  "version": "1.1.0",
+  "diagrams": [
+    {
+      "ordinal": 0,
+      "scrollPosition": {
+        "x": 0,
+        "y": 0
+      },
+      "nodes": [
+        {
+          "location": {
+            "x": 34.444444444444414,
+            "y": 141.11111111111111
+          },
+          "nodeIndex": "Stores",
+          "nodeLineageTag": "97cb04c1-b237-4f15-99b7-0fb5d5f8ee81",
+          "size": {
+            "height": 300,
+            "width": 234
+          },
+          "zIndex": 4
+        },
+        {
+          "location": {
+            "x": 94.666666666666657,
+            "y": 559.0329861111112
+          },
+          "nodeIndex": "Stores_Category",
+          "nodeLineageTag": "096d8ba9-5c50-4995-9a89-da089ef9e56e",
+          "size": {
+            "height": 128,
+            "width": 234
+          },
+          "zIndex": 2
+        },
+        {
+          "location": {
+            "x": 814.33331807454431,
+            "y": 0
+          },
+          "nodeIndex": "Cities",
+          "nodeLineageTag": "2ae8cf49-abc6-41b8-850a-d80116396e64",
+          "size": {
+            "height": 300,
+            "width": 234
+          },
+          "zIndex": 3
+        },
+        {
+          "location": {
+            "x": 450.55554029676671,
+            "y": 111.2942708333334
+          },
+          "nodeIndex": "StoresDummy",
+          "nodeLineageTag": "eb2c31fe-98f5-47ba-a400-f7e3aeea968a",
+          "size": {
+            "height": 200,
+            "width": 234
+          },
+          "zIndex": 5
+        },
+        {
+          "location": {
+            "x": 1063.8888736301,
+            "y": 291.5164930555556
+          },
+          "nodeIndex": "Metrics",
+          "nodeLineageTag": "e1fc63c4-49a8-4b35-bc9f-5f8f49ca5b68",
+          "size": {
+            "height": 104,
+            "width": 234
+          },
+          "zIndex": 1
+        },
+        {
+          "location": {
+            "x": 1313.4444291856557,
+            "y": 231.5164930555556
+          },
+          "nodeIndex": "prmMaxDistance",
+          "nodeLineageTag": "69db9054-3476-4222-bf79-07b713295c4f",
+          "size": {
+            "height": 224,
+            "width": 234
+          },
+          "zIndex": 0
+        }
+      ],
+      "name": "All tables",
+      "zoomValue": 90,
+      "pinKeyFieldsToTop": false,
+      "showExtraHeaderInfo": false,
+      "hideKeyFieldsWhenCollapsed": false,
+      "tablesLocked": false
+    }
+  ],
+  "selectedDiagram": "All tables",
+  "defaultDiagram": "All tables"
+}

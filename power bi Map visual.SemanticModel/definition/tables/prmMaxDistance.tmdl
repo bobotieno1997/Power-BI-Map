@@ -1,0 +1,26 @@
+table prmMaxDistance
+	lineageTag: 69db9054-3476-4222-bf79-07b713295c4f
+
+	measure 'prmMaxDistance Value' = SELECTEDVALUE('prmMaxDistance'[prmMaxDistance], 250)
+		formatString: 0
+		lineageTag: ca233a03-a5c2-4b6f-850f-21893edb378c
+
+	column prmMaxDistance
+		formatString: 0
+		lineageTag: d4c6c0c7-b63b-4bf2-aa7e-0e5a9d8c92c4
+		summarizeBy: none
+		sourceColumn: [Value]
+
+		extendedProperty ParameterMetadata =
+				{
+				  "version": 0
+				}
+
+		annotation SummarizationSetBy = User
+
+	partition prmMaxDistance = calculated
+		mode: import
+		source = GENERATESERIES(0, 1000, 10)
+
+	annotation PBI_Id = 2e6bf38b89de4e608274affa9b081cfa
+

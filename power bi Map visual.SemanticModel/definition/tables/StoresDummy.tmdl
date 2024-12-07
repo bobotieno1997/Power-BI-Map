@@ -1,0 +1,55 @@
+table StoresDummy
+	lineageTag: eb2c31fe-98f5-47ba-a400-f7e3aeea968a
+
+	column Latitude
+		lineageTag: 8b0e5626-4e7a-409b-a116-7f90a6650670
+		summarizeBy: none
+		isNameInferred
+		sourceColumn: [Latitude]
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column Longitude
+		lineageTag: 14ef3723-0ee2-4524-8785-fc182aa10217
+		summarizeBy: none
+		isNameInferred
+		sourceColumn: [Longitude]
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column 'Shop Name'
+		lineageTag: 265f8ed6-f1aa-4a17-bc4e-94e55dcc8d47
+		summarizeBy: none
+		isNameInferred
+		sourceColumn: [Shop Name]
+
+		annotation SummarizationSetBy = Automatic
+
+	column Cities
+		lineageTag: 87e9992f-0af8-4e5a-a256-4fa60aa6d59e
+		summarizeBy: none
+		isNameInferred
+		sourceColumn: [Cities]
+
+		annotation SummarizationSetBy = Automatic
+
+	partition StoresDummy = calculated
+		mode: import
+		source = ```
+				
+				UNION(   
+				    SELECTCOLUMNS(
+				        Stores,
+				        "Shop Name",Stores[Shop Name],
+				        "Latitude",Stores[Latitude],
+				        "Longitude",Stores[Longitude],
+				        "Cities",Stores[City]),
+				        {("Selected Location",,,)})
+				```
+
+	annotation PBI_Id = 7b4f7edc4f3e452da1bbde4994c3d0d6
+

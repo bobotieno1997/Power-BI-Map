@@ -1,0 +1,148 @@
+table Stores
+	lineageTag: 97cb04c1-b237-4f15-99b7-0fb5d5f8ee81
+
+	column 'Shop ID'
+		dataType: int64
+		formatString: 0
+		lineageTag: 92eb6b66-9961-4509-93b9-21bf031f205e
+		summarizeBy: count
+		sourceColumn: Shop ID
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Shop Name'
+		dataType: string
+		lineageTag: bca0802d-ceda-4920-9d54-edde702609cb
+		summarizeBy: none
+		sourceColumn: Shop Name
+
+		annotation SummarizationSetBy = Automatic
+
+	column Address
+		dataType: string
+		isHidden
+		lineageTag: ec0194c0-fac5-426a-975d-492cdc7b0af1
+		dataCategory: Address
+		summarizeBy: none
+		sourceColumn: Address
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column City
+		dataType: string
+		isHidden
+		lineageTag: 1f4aeb0c-d3ff-4b95-a041-f0607c0fd09f
+		dataCategory: City
+		summarizeBy: none
+		sourceColumn: City
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Postal Code'
+		dataType: int64
+		isHidden
+		formatString: 0
+		lineageTag: b13e9b21-0422-40fb-9f71-764d94ebb980
+		dataCategory: PostalCode
+		summarizeBy: count
+		sourceColumn: Postal Code
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column Category
+		dataType: string
+		lineageTag: fcd785db-744e-457f-85d9-fcbd13518b38
+		summarizeBy: none
+		sourceColumn: Category
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Delivery Availability'
+		dataType: string
+		lineageTag: 9c0dd65b-d10b-4154-abb4-3ebea222ce8a
+		summarizeBy: none
+		sourceColumn: Delivery Availability
+
+		annotation SummarizationSetBy = Automatic
+
+	column Latitude
+		dataType: double
+		isHidden
+		lineageTag: 76d1c470-a27f-4810-93e6-056a68636876
+		dataCategory: Latitude
+		summarizeBy: sum
+		sourceColumn: Latitude
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column Longitude
+		dataType: double
+		isHidden
+		lineageTag: 23c144d5-679b-4e3a-8856-3505f2e1169c
+		dataCategory: Longitude
+		summarizeBy: sum
+		sourceColumn: Longitude
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column 'Delivery Range'
+		dataType: int64
+		formatString: 0
+		lineageTag: dd57da9f-3c52-4324-bfc0-f7cbd9eb41e1
+		summarizeBy: sum
+		sourceColumn: Delivery Range
+
+		annotation SummarizationSetBy = Automatic
+
+	hierarchy location
+		lineageTag: bb32830b-9ca4-4507-b216-ee52eef3b5bb
+
+		level City
+			lineageTag: f30aa719-8ec9-4876-ada6-be56a67188d1
+			column: City
+
+		level Address
+			lineageTag: 6843b62f-a53d-4869-a382-09266526d849
+			column: Address
+
+		level Latitude
+			lineageTag: 1fdf3db5-fffa-49a3-b8f0-ddeb41769058
+			column: Latitude
+
+		level Longitude
+			lineageTag: e9c3776e-f350-4bb6-a147-4200f9881c0f
+			column: Longitude
+
+		level 'Postal Code'
+			lineageTag: 3de56d1d-3fd0-4879-9579-5e45fa9e8607
+			column: 'Postal Code'
+
+	partition Stores = m
+		mode: import
+		source =
+				let
+				    Source = Excel.Workbook(File.Contents("D:\Data Training Dropbox\Data Training\04. Youtube\02_Youtube_Ideas\Map Radius Filter\Shops.xlsx"), null, true),
+				    Sheet1_Sheet = Source{[Item="Sheet1",Kind="Sheet"]}[Data],
+				    #"Promoted Headers" = Table.PromoteHeaders(Sheet1_Sheet, [PromoteAllScalars=true]),
+				    #"Changed Type" = Table.TransformColumnTypes(#"Promoted Headers",{{"Shop ID", Int64.Type}, {"Shop Name", type text}, {"Address", type text}, {"City", type text}, {"Postal Code", Int64.Type}, {"Category", type text}, {"Delivery Availability", type text}, {"Delivery Range", Int64.Type}, {"Latitude", type number}, {"Longitude", type number}})
+				in
+				    #"Changed Type"
+
+	annotation PBI_ResultType = Table
+
+	annotation PBI_NavigationStepName = Navigation
+

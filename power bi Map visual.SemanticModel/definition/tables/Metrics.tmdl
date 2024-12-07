@@ -1,0 +1,93 @@
+table Metrics
+	lineageTag: e1fc63c4-49a8-4b35-bc9f-5f8f49ca5b68
+
+	measure 'lat Val' =
+			
+			IF(
+			    SELECTEDVALUE(StoresDummy[Shop Name]) = "Selected Location",
+			    SELECTEDVALUE(Cities[lat]),SELECTEDVALUE(StoresDummy[Latitude]))
+		lineageTag: 2c163db1-b39f-49fc-aa5f-84ac33e96acd
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure 'long Val' =
+			
+			IF(
+			    SELECTEDVALUE(StoresDummy[Shop Name]) = "Selected Location",
+			    SELECTEDVALUE(Cities[lng]),SELECTEDVALUE(StoresDummy[Longitude]))
+		lineageTag: 7a2fb0d6-69eb-4005-8858-166e567c12ef
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure 'cf location' =
+			
+			IF(
+			    SELECTEDVALUE(StoresDummy[Shop Name]) = "Selected Location",
+			    "GREEN", "BLACK")
+			   //// BLANK())
+		lineageTag: 5f7ed375-a295-487d-aaf9-b12e32ee93f1
+
+	measure 'cf size' =
+			
+			IF(
+			    SELECTEDVALUE(StoresDummy[Shop Name]) = "Selected Location",
+			    2, 0.3)
+		lineageTag: e4e2c89b-55d3-4d75-a162-1cb71b04b58b
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure 'Distance km' = ```
+			
+			VAR _mulitplier = PI()/180
+			var _radius = 6371
+			
+			var _latSelected = SELECTEDVALUE(Cities[lat])
+			var _lonSelected = SELECTEDVALUE(Cities[lng])
+			
+			var _latStore = SELECTEDVALUE(Stores[Latitude])
+			var _longStore = SELECTEDVALUE(Stores[Longitude])
+			
+			VAR _latDiff = (_latStore-_latSelected) * _mulitplier
+			VAR _lonDiff = (_longStore-_lonSelected) * _mulitplier
+			
+			var _step1 = 
+			SIN(_latDiff/2)^2 + COS(_latStore * _mulitplier)* COS(_latSelected * _mulitplier)*SIN(_lonDiff/2)^2
+			
+			VAR _step2 = 2*ATAN(DIVIDE(SQRT(_step1),SQRT(1-_step1)))
+			var _distance = _radius * _step2
+			
+			RETURN
+			IF(
+			    SELECTEDVALUE(StoresDummy[Shop Name]) <> "Selected Location",
+			_distance)
+			```
+		lineageTag: 393aec21-455d-44ca-949d-5b23335a039d
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure selectedpopulation =
+			
+			SELECTEDVALUE(Cities[population])
+		formatString: 0
+		lineageTag: 8dafdc0e-d54e-4402-a8ad-65a535c082fb
+
+	measure location_filter =
+			
+			IF(
+			    [Distance km]<= prmMaxDistance[prmMaxDistance Value],
+			    1,0)
+		formatString: 0
+		lineageTag: 37a40c87-e942-45b0-b0fb-4637ce1ce519
+
+	partition Metrics = m
+		mode: import
+		source =
+				let
+				    Source = Table.FromRows(Json.Document(Binary.Decompress(Binary.FromText("i44FAA==", BinaryEncoding.Base64), Compression.Deflate)), let _t = ((type nullable text) meta [Serialized.Text = true]) in type table [Measuresc = _t]),
+				    #"Changed Type" = Table.TransformColumnTypes(Source,{{"Measuresc", type text}}),
+				    #"Removed Columns" = Table.RemoveColumns(#"Changed Type",{"Measuresc"})
+				in
+				    #"Removed Columns"
+
+	annotation PBI_ResultType = Table
+

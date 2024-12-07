@@ -1,0 +1,106 @@
+table Cities
+	lineageTag: 2ae8cf49-abc6-41b8-850a-d80116396e64
+
+	column city
+		dataType: string
+		lineageTag: 84e97b96-41ee-4a97-8c7e-0b7960b36859
+		summarizeBy: none
+		sourceColumn: city
+
+		annotation SummarizationSetBy = Automatic
+
+	column lat
+		dataType: double
+		lineageTag: 4f8389f9-7036-48ee-b0c1-1efc091b6de3
+		summarizeBy: average
+		sourceColumn: lat
+
+		annotation SummarizationSetBy = User
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column lng
+		dataType: double
+		lineageTag: 618eda80-646d-4dc4-a21c-0f36032fa5a5
+		summarizeBy: average
+		sourceColumn: lng
+
+		annotation SummarizationSetBy = User
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column country
+		dataType: string
+		lineageTag: c1188b4b-51f4-42e7-b174-e2a23fbd5c81
+		summarizeBy: none
+		sourceColumn: country
+
+		annotation SummarizationSetBy = Automatic
+
+	column iso2
+		dataType: string
+		lineageTag: e842e456-cd40-4cd3-8341-61ea60059780
+		summarizeBy: none
+		sourceColumn: iso2
+
+		annotation SummarizationSetBy = Automatic
+
+	column iso3
+		dataType: string
+		lineageTag: 1ec1bf42-731f-4d23-a721-4d51b9095032
+		summarizeBy: none
+		sourceColumn: iso3
+
+		annotation SummarizationSetBy = Automatic
+
+	column admin_name
+		dataType: string
+		lineageTag: d64b507e-cc29-4079-866b-1631e4ae3535
+		summarizeBy: none
+		sourceColumn: admin_name
+
+		annotation SummarizationSetBy = Automatic
+
+	column capital
+		dataType: string
+		lineageTag: 18f74675-5e6e-4f53-b4ee-b8bc74d0cfd5
+		summarizeBy: none
+		sourceColumn: capital
+
+		annotation SummarizationSetBy = Automatic
+
+	column population
+		dataType: int64
+		formatString: 0
+		lineageTag: 238d0285-9ca8-424c-a4a1-64fa32528560
+		summarizeBy: sum
+		sourceColumn: population
+
+		annotation SummarizationSetBy = Automatic
+
+	column id
+		dataType: int64
+		formatString: 0
+		lineageTag: 891ab4a7-eb08-4dbc-b337-0dfa68c48eeb
+		summarizeBy: none
+		sourceColumn: id
+
+		annotation SummarizationSetBy = User
+
+	partition Cities = m
+		mode: import
+		source =
+				let
+				    Source = Excel.Workbook(File.Contents("D:\Data Training Dropbox\Data Training\04. Youtube\02_Youtube_Ideas\Map Radius Filter\worldcities.xlsx"), null, true),
+				    simplemaps.com_Sheet = Source{[Item="simplemaps.com",Kind="Sheet"]}[Data],
+				    #"Promoted Headers" = Table.PromoteHeaders(simplemaps.com_Sheet, [PromoteAllScalars=true]),
+				    #"Changed Type" = Table.TransformColumnTypes(#"Promoted Headers",{{"city", type text}, {"city_1", type text}, {"lat", type number}, {"lng", type number}, {"country", type text}, {"iso2", type text}, {"iso3", type text}, {"admin_name", type text}, {"capital", type text}, {"population", Int64.Type}, {"id", Int64.Type}}),
+				    #"Filtered Rows" = Table.SelectRows(#"Changed Type", each [country] = "Germany"),
+				    #"Removed Columns" = Table.RemoveColumns(#"Filtered Rows",{"city_1"})
+				in
+				    #"Removed Columns"
+
+	annotation PBI_NavigationStepName = Navigation
+
+	annotation PBI_ResultType = Table
+

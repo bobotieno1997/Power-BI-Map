@@ -1,0 +1,8 @@
+relationship a8711409-9c28-fed7-638d-7c00588563f2
+	fromColumn: Stores.Category
+	toColumn: Stores_Category.'Category ID'
+
+relationship 4f0bcc70-844f-64cc-e8f0-317ca7041f63
+	fromColumn: Stores.'Shop Name'
+	toColumn: StoresDummy.'Shop Name'
+

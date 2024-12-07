@@ -2,7 +2,7 @@
   "version": "4.0",
   "datasetReference": {
     "byPath": {
-      "path": "../Power_bi_map.SemanticModel"
+      "path": "../power bi Map visual.SemanticModel"
     },
     "byConnection": null
   }

@@ -2,10 +2,10 @@
   "$schema": "https://developer.microsoft.com/json-schemas/fabric/gitIntegration/platformProperties/2.0.0/schema.json",
   "metadata": {
     "type": "Report",
-    "displayName": "Power_bi_map"
+    "displayName": "power bi Map visual"
   },
   "config": {
     "version": "2.0",
-    "logicalId": "b46c460c-d195-4e46-8212-a1963720b559"
+    "logicalId": "6f444f61-7929-47fa-8485-ffb9e5fcbb27"
   }
 }
