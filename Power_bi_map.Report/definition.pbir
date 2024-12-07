@@ -1,0 +1,9 @@
+{
+  "version": "4.0",
+  "datasetReference": {
+    "byPath": {
+      "path": "../Power_bi_map.SemanticModel"
+    },
+    "byConnection": null
+  }
+}
